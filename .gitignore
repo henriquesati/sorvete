@@ -1,0 +1,26 @@
+# Ignora arquivos de modelos grandes (YOLO, etc.)
+*.pt
+*.weights
+*.onnx
+*.h5
+
+# Ignora arquivos de vídeo/dados grandes
+*.mp4
+*.avi
+*.mov
+*.mpg
+
+# Ignora pastas de treinamento/datasets
+/datasets/
+/training_output/
+/weights/
+
+# Ignora arquivos de configuração local/IDE
+.vscode/
+.idea/
+__pycache__/
+
+# Outros arquivos comuns em projetos Python
+*.pyc
+*.egg-info
+*.pth
