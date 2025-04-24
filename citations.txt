@@ -1,0 +1,16 @@
+The objects can be successfully tracked using SORT algorithms beating many State-of-the-art algorithms. The detector gives us detections, 
+Kalman filters give us tracks and the Hungarian algorithm performs data association. So, Why do we even need DeepSORT? Let’s look at it in the next section.
+
+
+results[0].boxes.xyxy  # Coordenadas das bounding boxes [x1,y1,x2,y2]
+results[0].boxes.conf   # Confianças das detecções (0-1)
+results[0].boxes.cls    # Classes detectadas (0 = "person")
+
+
+orig_shape: (720, 1280)
+path: 'image0.jpg'
+probs: None
+save_dir: 'runs\\detect\\predict'
+speed: {'preprocess': 2.1195999997871695, 'inference': 136.52499999989232, 'postprocess': 1.1733000010281103}]
+
+https://docs.ultralytics.com/reference/engine/results/

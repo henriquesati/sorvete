@@ -1,0 +1,51 @@
+comecei pesquisando sobre pytorch/relacionados e abstrações e me pareceu mais voltado pra treinamento de modelos em si, o que não é o escopo aqui
+deepseek prompt (entre ``` ``´)
+```
+me ajude a montar a stack para um projeto python de visao computacional, o escopo é
+projeto razoavelmente boilerplate e basico
+visão computacional para reconhecimento de pessoas em imagem/videos, utilizando built-ins ou modelos já treinados
+reescrita de frames do conteudo realizando a identifação e tracing do objeto ao decorrer do conteudo, quando animados (videos)
+possibilidade de identiciar a unicidade dos objetos, fazendo distinção de já identicados/traceados dos que não
+```
+
+`
+quais voce acha que seriam os downgrades em utilizar puramente opencv com CascadeClassifiers e CascadeClassifiers::load? 
+tirando a constraint de unicidade me parece preencher os demais requisitos. Opine tambem sobre pontos positivos nessa abordagem
+`
+De acordo com o deepseek Cascades peca em precisão e cenarios mais complexos como diferença de angulo altura e luz, a impl parece ser facil e como o video base parece nao tao complexo
+vale o teste
+
+aparentemente o escopo pode ser resumido em 
+-detection 
+-detection uniqueness (talvez salvar uma screenshot da pessoa detectada e passar por outro modelo de identificação mais apurada)
+-tracking
+se modelos com uniqueness mais apurada forem mais dificeis de implementar talvez seja mais facil fazer o first identifying e o tracing com opencv
+e realmente dar rely na uniqueness com outro modelo so pra isso
+
+
+`
+vamos começar com a abordagem puramente opencv com Haar, e sem o escopo de uniqueness, somente com o tracking e identificação
+gere os comandos necessarios pra instalar todas as dependencias
+tambem gere a boilerplate do codigo
+irei analisar um video chamado video.mp4, na  mesma pasta do executavel pytjon
+`
+não pesquisei mt a fundo mas opencv parece ser mais generalista na detecção e no teste detectou tudo menos pessoas, então vou pular direto pra outra abordagem
+```
+como fazer um pipe do opencv com outro modelo?
+por exemplo, utilizar os built-ins do opencv de tracing mas delegar a identificação de pessoas pra outra lib?
+usando cascade::load é possivel?
+```
+
+```
+otimo,   v8 funcionou bem melhor, porem:
+explique me os diferentes layers do processo
+por que eu preciso passar o source do video pro model e tambem pro pro cv2?
+me refiro há: como funcionam os layers e como eles se comunicam? o modelo indica quando uma pessoa aparece na tela e as dimensoes da pessoa, mas como isso ocorre? como é a passagem de parametros?
+achei que os videos eram processados concorrentemente entre processos, mas aparenemte  YOLO gera um uma lista de resultados, explique mais sobre essa estrutura e como ela se relaciona com o cv2.videocapture
+
+```
+
+```
+me mande o link da documentação tecnica do yolo, pra checar parametrização de classes etc
+```
+provavelmente o melhor approach vai ser meio que passar cada frame por um "pipe" de detect write and uniqueness
