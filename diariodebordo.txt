@@ -96,13 +96,11 @@ algo como for item1, item2, <- boxes_list, track_list:
 ]
 primeira impl a funcionar razoavelmente pra uniqueness
 
+YOLOV8
+[
+    conf 0.5 foi ravoavelmente bom pra filtrar somente pessoas
+     n_init=7 reduz bastante a má identificação de pessoas no mesmo quadro (troca de ids na mesma pessoa repentinamente)
+]
 
-
-```
-ok. vamos pausar isto por enquanto. quero testar outro codigo inteiramente novo, que pode utilizar yolo ou nao
-porem, quais formas voce me recomenda de cumprir a uniqueness sem ser com deepsort? eu gostaria de uma, pense e responda antes de pensar na proxima pergunta.
-Proxima pergunta: E qual abordagem posso pra manter o estado das pessoas de forma mais persistente? deepsort armazena em memory com um threshhold de quadros em que a pessoa é identificada
-mas se essa pessoa ficar muito tempo sem aparecer, eu perco a uniquness correto? me corrija se não.
-então haveria alguma forma de armazenar mais abruptamente o frame das pessoas? como um crop e armazenamento em diretorios, e depois passar pra algum modelo identificar
-se ja aparece ou nao? assim se o espaçamento de aparição for alto, o codigo ainda vai conseguir identificar. Se for, é uma abordagem recomendada?
-```
+terminei a versão final com yolov8. funcionou razoavelmente bem e agr depende mais de combinar melhor as confs pra deixar a accuracy de uniqueness maior
+atualmente so to renderizando as pessoas que passam pelo layer de uniqueness, talvez seja melhor renderizar todas que vem direto do yolo e usar a uniqueness só pro contador
