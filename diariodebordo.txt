@@ -48,4 +48,61 @@ achei que os videos eram processados concorrentemente entre processos, mas apare
 ```
 me mande o link da documentação tecnica do yolo, pra checar parametrização de classes etc
 ```
-provavelmente o melhor approach vai ser meio que passar cada frame por um "pipe" de detect write and uniqueness
+provavelmente o melhor approach vai ser meio que passar cada frame por um "pipe" de detect - write - uniqueness
+
+yolo gerando bem melhor mas com redimensionamento e algumas falhas
+
+
+```
+for box, conf in zip(boxes, confs):
+                detections.append((box, conf, 0))
+explique essa linha melhor
+o que é zip e que estrutura de dados é passada? uma tupla de 3 elem?
+``` 
+
+```
+como posso ''inverter as dependencias" e atualizar uma track por vez dentro do for box in boxes?
+assim posso manter uma referencia null do tipo
+possible_track_id = null
+ai checar se not track.is_confirmed():
+se for confirmado, possible_track_id = track_id
+e ai utilizar como referencia as coordenadas box originais e utilizar track somente como um layer de validação e não como referencia x1 x2 z1 z2
+```
+
+```
+reescreva o codigo novamente pra usar deepsort apenas como um layer de validação, mesmo que isso aumente o  tempo de execução
+
+```
+mesmo setando todas as flags do deepsort pra retornar bbox original ao invés dos valores Kalman as heights estavam vindo distorcidas, então optei por usar temporariamente
+(nao sei se vou entregar desse jeito) uma outra implementação bem mais lenta, mas que permite pegar os valores bbox originais e desenhar corretamente
+também tentei usar IOU na outra implementaçãos mais rapida, mas mesmmo fazendo o crop corretamente, algumas vezes as coordenadas da interseção divergiam e os draws eram ligeiramente
+replicados
+
+```
+aparentemente boxes sempre vai ter o mesmo lenght que tracks 
+atualmente a validação ocorre so no ultimo item de track, o que faz com que so uma box seja escrita por vez no frame inteiro (mesmo que haja mais pessoas)
+tente implementar algo que itere as 2 listas ao mesmo tempo, assim quando track.is_confirmed for true, vai ser só questão de pegar o bbox na mesma posição do array de entrada boxes
+algo como for item1, item2, <- boxes_list, track_list:
+ if item2.is_confirmed
+    draw(item2,cords)
+```
+[
+     for track, original_box in zip(tracks, original_boxes):
+                if track.is_confirmed():
+                    # Usar coordenadas originais do YOLO
+                    x1, y1, x2, y2 = map(int, original_box)
+                    track_id = track.track_id 
+                    print(f"Track ID: {track.track_id} | BBox: {x1}, {y1}, {x2}, {y2}")
+]
+primeira impl a funcionar razoavelmente pra uniqueness
+
+
+
+```
+ok. vamos pausar isto por enquanto. quero testar outro codigo inteiramente novo, que pode utilizar yolo ou nao
+porem, quais formas voce me recomenda de cumprir a uniqueness sem ser com deepsort? eu gostaria de uma, pense e responda antes de pensar na proxima pergunta.
+Proxima pergunta: E qual abordagem posso pra manter o estado das pessoas de forma mais persistente? deepsort armazena em memory com um threshhold de quadros em que a pessoa é identificada
+mas se essa pessoa ficar muito tempo sem aparecer, eu perco a uniquness correto? me corrija se não.
+então haveria alguma forma de armazenar mais abruptamente o frame das pessoas? como um crop e armazenamento em diretorios, e depois passar pra algum modelo identificar
+se ja aparece ou nao? assim se o espaçamento de aparição for alto, o codigo ainda vai conseguir identificar. Se for, é uma abordagem recomendada?
+```
