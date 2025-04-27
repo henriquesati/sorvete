@@ -14,3 +14,34 @@ save_dir: 'runs\\detect\\predict'
 speed: {'preprocess': 2.1195999997871695, 'inference': 136.52499999989232, 'postprocess': 1.1733000010281103}]
 
 https://docs.ultralytics.com/reference/engine/results/
+https://docs.ultralytics.com/reference/engine/model/#ultralytics.engine.model.Model
+https://docs.ultralytics.com/reference/engine/predictor/#ultralytics.engine.predictor.BasePredictor
+
+0: 384x640 3 persons, 183.6ms
+Speed: 3.4ms preprocess, 183.6ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+[[     628.15      2.9699      1279.3      317.03]
+ [     620.03      6.5248      1082.3      319.37]
+ [     854.12      3.5735      1279.6      308.41]]
+[[     628.15      2.9699      1279.3      317.03]
+ [     620.03      6.5248      1082.3      319.37]
+ [     854.12      3.5735      1279.6      308.41]]
+[[     628.15      2.9699      1279.3      317.03]
+ [     620.03      6.5248      1082.3      319.37]
+ [     854.12      3.5735      1279.6      308.41]]
+
+Re-ID específico - Complementar seu tracker com um modelo de re-identificação 
+especializado treinado em datasets de pessoas. Modelos como OSNet ou FastReID podem ser integrados com YOLOv8.
+
+However, ByteTrack still suffers identity switches when objects cross paths, disappear for longer periods, or undergo drastic 
+appearance changes. Adding a dedicated Re-ID embedding network can mitigate these errors, but at the cost of an extra 15–25 ms per frame and increased memory usage.
+
+https://miguel-mendez-ai.com/2023/11/08/tracking-by-detection-overview
+
+https://github.com/KaiyangZhou/deep-person-reid
+https://github.com/ultralytics/ultralytics/pull/20192
+https://github.com/ultralytics/ultralytics/pull/20192/files
+
+[REID]
+https://kaiyangzhou.github.io/deep-person-reid/
+https://kaiyangzhou.github.io/deep-person-reid/user_guide
+https://y-t-g.github.io/tutorials/yolo-reid/

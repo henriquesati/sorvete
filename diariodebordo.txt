@@ -41,9 +41,11 @@ otimo,   v8 funcionou bem melhor, porem:
 explique me os diferentes layers do processo
 por que eu preciso passar o source do video pro model e tambem pro pro cv2?
 me refiro há: como funcionam os layers e como eles se comunicam? o modelo indica quando uma pessoa aparece na tela e as dimensoes da pessoa, mas como isso ocorre? como é a passagem de parametros?
-achei que os videos eram processados concorrentemente entre processos, mas aparenemte  YOLO gera um uma lista de resultados, explique mais sobre essa estrutura e como ela se relaciona com o cv2.videocapture
+achei que os videos eram processados concorrentemente entre processos, mas aparenemte  YOLO gera um uma lista de resultados, explique mais sobre essa estrutura
+e como ela se relaciona com o cv2.videocapture
 
 ```
+nesse prompt o deepseek tinha gerado um exemplo errado em que ele passava o video tanto pro opencv analisar qunto pro outro modelo
 
 ```
 me mande o link da documentação tecnica do yolo, pra checar parametrização de classes etc
@@ -68,6 +70,7 @@ ai checar se not track.is_confirmed():
 se for confirmado, possible_track_id = track_id
 e ai utilizar como referencia as coordenadas box originais e utilizar track somente como um layer de validação e não como referencia x1 x2 z1 z2
 ```
+aqui eu tentei utilizar as coordenadas originais pq o tracker retornava ela com as alturas negativas
 
 ```
 reescreva o codigo novamente pra usar deepsort apenas como um layer de validação, mesmo que isso aumente o  tempo de execução
@@ -104,3 +107,24 @@ YOLOV8
 
 terminei a versão final com yolov8. funcionou razoavelmente bem e agr depende mais de combinar melhor as confs pra deixar a accuracy de uniqueness maior
 atualmente so to renderizando as pessoas que passam pelo layer de uniqueness, talvez seja melhor renderizar todas que vem direto do yolo e usar a uniqueness só pro contador
+
+talvez seja melhor renderizar tudo que o yolo assume como positivo e deixar o tracker avaliando um espaço maior de frames pra definir a identidade
+
+
+```
+ok. vamos pausar isto por enquanto. quero testar outro codigo inteiramente novo, que pode utilizar yolo ou nao
+porem, quais formas voce me recomenda de cumprir a uniqueness sem ser com deepsort? eu gostaria de uma, pense e responda antes de pensar na proxima pergunta.
+Proxima pergunta: E qual abordagem posso pra manter o estado das pessoas de forma mais persistente? deepsort armazena em memory com um threshhold de quadros em que a pessoa é identificada
+mas se essa pessoa ficar muito tempo sem aparecer, eu perco a uniquness correto? me corrija se não.
+então haveria alguma forma de armazenar mais abruptamente o frame das pessoas? como um crop e armazenamento em diretorios, e depois passar pra algum modelo identificar
+se ja apareceu ou nao? assim se o espaçamento de aparição for alto, o codigo ainda vai conseguir identificar. Se for, é uma abordagem recomendada?
+```
+
+claude prompt 
+{
+estou realizando uma task de identificr pessoas em um video ,e devo contar as pessoas diferentes que aparecem durante o video
+logo preciso gerar uma "identidade" pra cada pessoa identificada, pra quando ela reaparecer, nao ser contada novamente
+estou utilizando yolov8 com deepsort como layer de vlaidação, mas embora o yolo consiga identificar corretamente ou quase, o deepsort tem dado algumas falhas nas identificações unitarias
+que alternaitvas de layer de validação voce me sugere?
+}
+ 
