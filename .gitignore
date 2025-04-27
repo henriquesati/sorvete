@@ -5,7 +5,6 @@
 *.h5
 
 # Ignora arquivos de vídeo/dados grandes
-*.mp4
 *.avi
 *.mov
 *.mpg
@@ -24,3 +23,4 @@ __pycache__/
 *.pyc
 *.egg-info
 *.pth
+yolov8n.pt
